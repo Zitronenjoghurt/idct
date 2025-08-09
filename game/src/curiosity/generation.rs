@@ -4,7 +4,7 @@ use crate::curiosity::Curiosity;
 use crate::utils::random::seed::RandomSeed;
 
 mod blueprint;
-mod layers;
+pub mod layers;
 
 #[derive(Debug, Default)]
 pub struct CuriosityGenerator {
@@ -24,8 +24,8 @@ impl CuriosityGenerator {
         }
     }
 
-    pub fn add(mut self, layer: Box<dyn CuriosityGenerationLayer>) -> Self {
-        self.layers.push(layer);
+    pub fn layer(mut self, layer: impl CuriosityGenerationLayer + 'static) -> Self {
+        self.layers.push(Box::new(layer));
         self
     }
 

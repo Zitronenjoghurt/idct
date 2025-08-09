@@ -1349,6 +1349,7 @@ dependencies = [
  "egui",
  "idct-game",
  "serde",
+ "serde_json",
 ]
 
 [[package]]

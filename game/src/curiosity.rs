@@ -3,7 +3,7 @@ use crate::curiosity::properties::temperature::Temperature;
 use crate::dimension::Dimension;
 use serde::{Deserialize, Serialize};
 
-mod generation;
+pub mod generation;
 mod properties;
 
 #[derive(Debug, Default, Serialize, Deserialize)]

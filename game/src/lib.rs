@@ -1,3 +1,3 @@
-mod curiosity;
-mod dimension;
+pub mod curiosity;
+pub mod dimension;
 mod utils;
