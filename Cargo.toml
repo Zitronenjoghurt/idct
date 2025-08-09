@@ -1,0 +1,6 @@
+[workspace]
+members = ["app", "game"]
+resolver = "2"
+
+[workspace.dependencies]
+idct-game = { path = "game" }
