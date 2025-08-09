@@ -1,15 +1,14 @@
 use crate::curiosity::generation::blueprint::CuriosityGenerationBlueprint;
 use crate::curiosity::generation::layers::CuriosityGenerationLayer;
-use crate::curiosity::generation::seed::CuriosityGenerationSeed;
 use crate::curiosity::Curiosity;
+use crate::utils::random::seed::RandomSeed;
 
 mod blueprint;
 mod layers;
-mod seed;
 
 #[derive(Debug, Default)]
 pub struct CuriosityGenerator {
-    seed: CuriosityGenerationSeed,
+    seed: RandomSeed,
     layers: Vec<Box<dyn CuriosityGenerationLayer>>,
 }
 
@@ -18,7 +17,7 @@ impl CuriosityGenerator {
         Self::default()
     }
 
-    pub fn with_seed(seed: CuriosityGenerationSeed) -> Self {
+    pub fn with_seed(seed: RandomSeed) -> Self {
         Self {
             seed,
             ..Default::default()

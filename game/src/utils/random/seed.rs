@@ -4,9 +4,9 @@ use rand::SeedableRng;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[derive(Debug, Copy, Clone)]
-pub struct CuriosityGenerationSeed([u8; 32]);
+pub struct RandomSeed([u8; 32]);
 
-impl CuriosityGenerationSeed {
+impl RandomSeed {
     pub fn new(seed: [u8; 32]) -> Self {
         Self(seed)
     }
@@ -29,19 +29,19 @@ impl CuriosityGenerationSeed {
     }
 }
 
-impl Default for CuriosityGenerationSeed {
+impl Default for RandomSeed {
     fn default() -> Self {
         Self::random()
     }
 }
 
-impl AsRef<[u8]> for CuriosityGenerationSeed {
+impl AsRef<[u8]> for RandomSeed {
     fn as_ref(&self) -> &[u8] {
         &self.0
     }
 }
 
-impl From<&[u8]> for CuriosityGenerationSeed {
+impl From<&[u8]> for RandomSeed {
     fn from(value: &[u8]) -> Self {
         let mut seed = [0u8; 32];
         let len = value.len().min(32);
@@ -50,7 +50,7 @@ impl From<&[u8]> for CuriosityGenerationSeed {
     }
 }
 
-impl Serialize for CuriosityGenerationSeed {
+impl Serialize for RandomSeed {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -59,7 +59,7 @@ impl Serialize for CuriosityGenerationSeed {
     }
 }
 
-impl<'de> Deserialize<'de> for CuriosityGenerationSeed {
+impl<'de> Deserialize<'de> for RandomSeed {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

@@ -1,9 +1,18 @@
 use crate::app::IDCTApp;
 
 mod app;
+mod state;
+mod views;
 
 fn main() {
-    let native_options = eframe::NativeOptions::default();
+    let native_options = eframe::NativeOptions {
+        viewport: egui::ViewportBuilder::default()
+            .with_maximized(true)
+            .with_title("Inter-Dimensional Curiosities Trader"),
+        persist_window: true,
+        ..Default::default()
+    };
+
     eframe::run_native(
         "IDCT",
         native_options,
