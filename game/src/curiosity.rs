@@ -1,10 +1,14 @@
 use crate::curiosity::properties::mass::Mass;
 use crate::curiosity::properties::temperature::Temperature;
+use crate::dimension::Dimension;
+use serde::{Deserialize, Serialize};
 
+mod generation;
 mod properties;
 
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Serialize, Deserialize)]
 pub struct Curiosity {
+    origin: Dimension,
     mass: Mass,
     temperature: Temperature,
 }
