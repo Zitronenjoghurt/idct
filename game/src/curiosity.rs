@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 pub mod generation;
 mod properties;
+pub mod tag;
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct Curiosity {

@@ -2,6 +2,7 @@ use crate::state::AppState;
 use egui::Context;
 use serde::{Deserialize, Serialize};
 
+mod content_editor;
 mod debug;
 mod main_menu;
 
@@ -9,6 +10,7 @@ mod main_menu;
 pub enum ViewID {
     #[default]
     MainMenu,
+    ContentEditor,
     Debug,
 }
 
@@ -18,6 +20,7 @@ pub trait View: Default {
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct ViewManager {
+    content_editor: content_editor::ContentEditorView,
     debug: debug::DebugView,
     main_menu: main_menu::MainMenuView,
 }
@@ -25,6 +28,7 @@ pub struct ViewManager {
 impl View for ViewManager {
     fn render(&mut self, ctx: &Context, state: &mut AppState) {
         match state.current_view() {
+            ViewID::ContentEditor => self.content_editor.render(ctx, state),
             ViewID::Debug => self.debug.render(ctx, state),
             ViewID::MainMenu => self.main_menu.render(ctx, state),
         }

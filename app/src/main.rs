@@ -1,8 +1,10 @@
 use crate::app::IDCTApp;
 
 mod app;
+mod components;
 mod state;
 mod views;
+mod windows;
 
 fn main() {
     let native_options = eframe::NativeOptions {
