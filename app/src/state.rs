@@ -1,7 +1,8 @@
 use crate::state::content_editor::ContentEditorState;
+use crate::systems::file_picker::FilePicker;
+use crate::systems::toasts::ToastSystem;
 use crate::views::ViewID;
 use egui::Context;
-use egui_notify::Toasts;
 use serde::{Deserialize, Serialize};
 
 mod content_editor;
@@ -10,13 +11,16 @@ mod content_editor;
 pub struct AppState {
     current_view: ViewID,
     #[serde(skip)]
-    toasts: Toasts,
+    pub toasts: ToastSystem,
+    #[serde(skip)]
+    pub file_picker: FilePicker,
     pub content_editor_state: ContentEditorState,
 }
 
 impl AppState {
-    pub fn render(&mut self, ctx: &Context) {
-        self.toasts.show(ctx);
+    pub fn update(&mut self, ctx: &Context) {
+        self.update_file_picker(ctx);
+        self.toasts.update(ctx);
     }
 
     pub fn current_view(&self) -> ViewID {
@@ -27,11 +31,9 @@ impl AppState {
         self.current_view = view;
     }
 
-    pub fn toast_error(&mut self, message: &str) {
-        self.toasts.error(message).duration(None);
-    }
-
-    pub fn toast_success(&mut self, message: &str) {
-        self.toasts.success(message).duration(None);
+    fn update_file_picker(&mut self, ctx: &Context) {
+        let mut file_picker = std::mem::take(&mut self.file_picker);
+        file_picker.update(ctx, self);
+        self.file_picker = file_picker;
     }
 }

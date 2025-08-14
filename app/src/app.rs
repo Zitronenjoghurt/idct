@@ -51,7 +51,7 @@ impl IDCTApp {
 
 impl App for IDCTApp {
     fn update(&mut self, ctx: &Context, _frame: &mut Frame) {
-        self.state.render(ctx);
+        self.state.update(ctx);
         self.view_manager.render(ctx, &mut self.state);
     }
 

@@ -1,3 +1,4 @@
+use crate::components::Component;
 use crate::windows::ViewWindow;
 use egui::{Ui, WidgetText};
 
@@ -18,15 +19,21 @@ impl<'a> WindowMenu<'a> {
         self.windows.push(window);
         self
     }
+}
 
-    pub fn show(self, ui: &mut Ui) {
+impl Component for WindowMenu<'_> {
+    fn show(self, ui: &mut Ui) {
         ui.heading(self.title);
         ui.separator();
 
         for window in self.windows {
             let mut open = window.window_is_open();
-            if ui.checkbox(&mut open, window.window_title()).changed() {
-                window.window_set_open(open);
+            let response = ui.selectable_label(open, window.window_title());
+            if response.changed() {
+                open = !open;
+            }
+            if response.clicked() {
+                window.window_set_open(!open);
             }
         }
     }
