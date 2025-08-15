@@ -28,6 +28,6 @@ impl ViewWindow for TagEditWindow {
     }
 
     fn render_content(&mut self, ui: &mut Ui, state: &mut AppState) {
-        TagRulesEdit::new(&mut state.content_editor_state.edited_data.tag_rules).show(ui);
+        TagRulesEdit::new(&mut state.content_editor.edited_pack.data.tag_rules).show(ui);
     }
 }

@@ -1,3 +1,4 @@
+use crate::data::pack::DataPack;
 use crate::data::GameData;
 use crate::error::GameResult;
 use crate::state::GameState;
@@ -9,7 +10,7 @@ pub mod error;
 pub mod state;
 mod utils;
 
-pub const CORE_DATA_BYTES: &[u8] = include_bytes!("./../../data/core_data.json");
+pub const CORE_DATA_BYTES: &[u8] = include_bytes!("./../../data/core_data.idct");
 
 #[derive(Debug, Default)]
 pub struct Game {
@@ -23,7 +24,7 @@ impl Game {
     }
 
     pub fn initialize(&mut self) -> GameResult<()> {
-        self.data.load_from_core_data()?;
+        self.data = DataPack::from_core_data()?.data;
         Ok(())
     }
 }

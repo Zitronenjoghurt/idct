@@ -17,6 +17,7 @@ impl Component for TagRulesEdit<'_> {
     fn show(self, ui: &mut Ui) {
         for tag_rule in self.tag_rules.rules.iter_mut() {
             TagRuleEdit::new(tag_rule).show(ui);
+            ui.separator();
         }
 
         if ui.button("Add").clicked() {

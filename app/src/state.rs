@@ -14,7 +14,7 @@ pub struct AppState {
     pub toasts: ToastSystem,
     #[serde(skip)]
     pub file_picker: FilePicker,
-    pub content_editor_state: ContentEditorState,
+    pub content_editor: ContentEditorState,
 }
 
 impl AppState {

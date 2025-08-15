@@ -5,18 +5,18 @@ use crate::views::{View, ViewID};
 use egui::{Button, Context, MenuBar, RichText, SidePanel, TopBottomPanel};
 use serde::{Deserialize, Serialize};
 
-mod data_window;
+mod data_pack_window;
 mod tag_edit_window;
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct ContentEditorView {
-    data_window: data_window::DataWindow,
+    data_pack_window: data_pack_window::DataPackWindow,
     tag_edit_window: tag_edit_window::TagEditWindow,
 }
 
 impl ContentEditorView {
     fn render_windows(&mut self, ctx: &Context, state: &mut AppState) {
-        self.data_window.render(ctx, state);
+        self.data_pack_window.render(ctx, state);
         self.tag_edit_window.render(ctx, state);
     }
 
@@ -44,7 +44,7 @@ impl View for ContentEditorView {
 
         SidePanel::left("content_editor_tag_editor_left_panel").show(ctx, |ui| {
             WindowMenu::new("Windows")
-                .window(&mut self.data_window)
+                .window(&mut self.data_pack_window)
                 .window(&mut self.tag_edit_window)
                 .show(ui);
         });
