@@ -1,5 +1,5 @@
-use crate::curiosity::properties::CuriosityProperty;
-use crate::curiosity::tag::TagID;
+use crate::curiosity::property::id::CuriosityPropertyID;
+use crate::curiosity::tag::id::TagID;
 use crate::utils::traits::mergeable::Mergeable;
 use serde::{Deserialize, Serialize};
 
@@ -37,7 +37,7 @@ pub struct TagRule {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TagRulePropertyRange {
-    pub property: CuriosityProperty,
+    pub property: CuriosityPropertyID,
     pub min: f32,
     pub max: f32,
 }

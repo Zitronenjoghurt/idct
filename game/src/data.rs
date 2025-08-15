@@ -1,3 +1,4 @@
+use crate::curiosity::property::definition::CuriosityPropertyDefinitions;
 use crate::curiosity::tag::rules::TagRules;
 use crate::utils::traits::mergeable::Mergeable;
 use serde::{Deserialize, Serialize};
@@ -8,6 +9,11 @@ pub mod pack;
 pub struct GameData {
     #[serde(default, skip_serializing_if = "TagRules::is_empty")]
     pub tag_rules: TagRules,
+    #[serde(
+        default,
+        skip_serializing_if = "CuriosityPropertyDefinitions::is_empty"
+    )]
+    pub curiosity_properties: CuriosityPropertyDefinitions,
 }
 
 impl GameData {
