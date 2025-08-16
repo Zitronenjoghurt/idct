@@ -31,6 +31,7 @@ impl ViewWindow for TagEditWindow {
         TagRulesEdit::new(
             &mut state.content_editor.edited_pack.data.tag_rules,
             &state.content_editor.edited_pack.data.curiosity_properties,
+            &state.content_editor.cached_tag_ids,
         )
         .show(ui);
     }

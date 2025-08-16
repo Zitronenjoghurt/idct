@@ -2,6 +2,7 @@ use crate::components::property_selector::PropertySelector;
 use crate::components::Component;
 use egui::{Grid, Ui};
 use idct_game::curiosity::property::definition::CuriosityPropertyDefinitions;
+use idct_game::curiosity::property::types::CuriosityPropertyType;
 use idct_game::curiosity::tag::rules::TagRulePropertyRange;
 
 pub struct TagRulePropertyRangeEdit<'a> {
@@ -26,15 +27,17 @@ impl Component for TagRulePropertyRangeEdit<'_> {
         Grid::new("tag_rule_property_range_edit")
             .striped(true)
             .num_columns(2)
-            .max_col_width(200.0)
             .show(ui, |ui| {
                 ui.label("Property");
                 PropertySelector::new(
                     &mut self.property_range.property,
                     &self.property_definitions.definitions,
-                    |item| &item.id,
-                    |value| value.as_ref(),
+                    |property_def| &property_def.id,
+                    |property_id| property_id.as_ref(),
                 )
+                .condition(|property_def| {
+                    property_def.property_type == CuriosityPropertyType::Normalized
+                })
                 .id("property_range_property_selector")
                 .show(ui);
                 ui.end_row();

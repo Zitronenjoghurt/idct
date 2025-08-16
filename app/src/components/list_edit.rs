@@ -11,6 +11,7 @@ where
     add_label: &'a str,
     max_height: Option<f32>,
     max_width: Option<f32>,
+    id: &'a str,
 }
 
 impl<'a, T, F> ListEdit<'a, T, F>
@@ -25,7 +26,13 @@ where
             add_label: "Add",
             max_height: Some(400.0),
             max_width: Some(400.0),
+            id: "list_edit",
         }
+    }
+
+    pub fn id(mut self, id: &'a str) -> Self {
+        self.id = id;
+        self
     }
 
     pub fn add_label(mut self, label: &'a str) -> Self {
@@ -52,7 +59,7 @@ where
     fn show(self, ui: &mut Ui) {
         let mut to_remove = None;
 
-        let mut scroll_area = ScrollArea::vertical();
+        let mut scroll_area = ScrollArea::vertical().id_salt(self.id);
         if let Some(max_height) = self.max_height {
             scroll_area = scroll_area.max_height(max_height);
         }

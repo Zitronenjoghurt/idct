@@ -21,6 +21,7 @@ impl AppState {
     pub fn update(&mut self, ctx: &Context) {
         self.update_file_picker(ctx);
         self.toasts.update(ctx);
+        self.content_editor.update();
     }
 
     pub fn current_view(&self) -> ViewID {

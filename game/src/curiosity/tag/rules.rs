@@ -38,7 +38,7 @@ pub struct TagRulePropertyRange {
     pub max: f32,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Default, Serialize, Deserialize)]
 pub struct TagRuleTagRelation {
     pub tag: TagID,
     pub factor: f32,
