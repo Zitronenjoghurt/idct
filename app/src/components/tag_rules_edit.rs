@@ -1,3 +1,4 @@
+use crate::components::list_edit::ListEdit;
 use crate::components::tag_rule_edit::TagRuleEdit;
 use crate::components::Component;
 use egui::Ui;
@@ -15,13 +16,9 @@ impl<'a> TagRulesEdit<'a> {
 
 impl Component for TagRulesEdit<'_> {
     fn show(self, ui: &mut Ui) {
-        for tag_rule in self.tag_rules.rules.iter_mut() {
+        ListEdit::new(&mut self.tag_rules.rules, |tag_rule, ui| {
             TagRuleEdit::new(tag_rule).show(ui);
-            ui.separator();
-        }
-
-        if ui.button("Add").clicked() {
-            self.tag_rules.rules.push(Default::default());
-        }
+        })
+        .show(ui);
     }
 }

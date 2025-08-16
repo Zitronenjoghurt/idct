@@ -9,10 +9,6 @@ pub struct TagRules {
 }
 
 impl TagRules {
-    pub fn new() -> Self {
-        Self::default()
-    }
-
     pub fn is_empty(&self) -> bool {
         self.rules.is_empty()
     }
@@ -26,7 +22,7 @@ impl Mergeable for TagRules {
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct TagRule {
-    pub identifier: TagID,
+    pub id: TagID,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub properties: Vec<TagRulePropertyRange>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]

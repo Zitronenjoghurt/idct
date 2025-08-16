@@ -1,5 +1,5 @@
 use crate::components::Component;
-use egui::Ui;
+use egui::{Grid, Ui};
 use idct_game::curiosity::tag::rules::TagRule;
 
 pub struct TagRuleEdit<'a> {
@@ -14,6 +14,10 @@ impl<'a> TagRuleEdit<'a> {
 
 impl Component for TagRuleEdit<'_> {
     fn show(self, ui: &mut Ui) {
-        ui.text_edit_singleline(self.tag_rule.identifier.as_mut());
+        Grid::new("tag_rule_edit").num_columns(2).show(ui, |ui| {
+            ui.label("Identifier");
+            ui.text_edit_singleline(self.tag_rule.id.as_mut());
+            ui.end_row();
+        });
     }
 }

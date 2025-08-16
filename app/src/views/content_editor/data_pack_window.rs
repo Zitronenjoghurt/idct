@@ -88,4 +88,8 @@ impl ViewWindow for DataPackWindow {
             }
         });
     }
+
+    fn resizable(&self) -> bool {
+        false
+    }
 }
