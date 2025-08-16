@@ -8,6 +8,7 @@ pub struct TagRuleTagRelationEdit<'a> {
     relation: &'a mut TagRuleTagRelation,
     cached_tag_ids: &'a [TagID],
     parent_tag_id: Option<&'a TagID>,
+    id: &'a str,
 }
 
 impl<'a> TagRuleTagRelationEdit<'a> {
@@ -16,7 +17,13 @@ impl<'a> TagRuleTagRelationEdit<'a> {
             relation,
             cached_tag_ids: tag_ids,
             parent_tag_id: None,
+            id: "tag_rule_tag_relation_edit",
         }
+    }
+
+    pub fn id(mut self, id: &'a str) -> Self {
+        self.id = id;
+        self
     }
 
     pub fn parent_tag_id(mut self, parent_tag_id: &'a TagID) -> Self {
@@ -27,7 +34,7 @@ impl<'a> TagRuleTagRelationEdit<'a> {
 
 impl Component for TagRuleTagRelationEdit<'_> {
     fn show(self, ui: &mut Ui) {
-        Grid::new("tag_rule_tag_relation_edit")
+        Grid::new(self.id)
             .num_columns(2)
             .striped(true)
             .show(ui, |ui| {
@@ -38,7 +45,7 @@ impl Component for TagRuleTagRelationEdit<'_> {
                     |tag_id| tag_id,
                     |tag_id| tag_id.as_ref(),
                 )
-                .id("tag_relation_tag_id_selector")
+                .id(self.id)
                 .condition(|tag_id| {
                     if tag_id.as_ref().is_empty() {
                         return false;

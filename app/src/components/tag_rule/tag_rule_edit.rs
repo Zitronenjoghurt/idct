@@ -54,6 +54,7 @@ impl Component for TagRuleEdit<'_> {
                 ui.vertical(|ui| {
                     ListEdit::new(&mut self.tag_rule.positive, |tag_relation, ui| {
                         TagRuleTagRelationEdit::new(tag_relation, self.cached_tag_ids)
+                            .id("tag_rule_edit_positive_relations")
                             .parent_tag_id(&self.tag_rule.id)
                             .show(ui);
                     })
@@ -68,6 +69,7 @@ impl Component for TagRuleEdit<'_> {
                 ui.vertical(|ui| {
                     ListEdit::new(&mut self.tag_rule.negative, |tag_relation, ui| {
                         TagRuleTagRelationEdit::new(tag_relation, self.cached_tag_ids)
+                            .id("tag_rule_edit_negative_relations")
                             .parent_tag_id(&self.tag_rule.id)
                             .show(ui);
                     })
