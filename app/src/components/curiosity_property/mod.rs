@@ -1,0 +1,2 @@
+pub mod curiosity_property_definition_edit;
+pub mod curiosity_property_definitions_edit;

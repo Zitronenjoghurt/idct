@@ -1,4 +1,4 @@
-use crate::components::tag_rules_edit::TagRulesEdit;
+use crate::components::tag_rule::tag_rules_edit::TagRulesEdit;
 use crate::components::Component;
 use crate::state::AppState;
 use crate::windows::ViewWindow;
@@ -28,7 +28,11 @@ impl ViewWindow for TagEditWindow {
     }
 
     fn render_content(&mut self, ui: &mut Ui, state: &mut AppState) {
-        TagRulesEdit::new(&mut state.content_editor.edited_pack.data.tag_rules).show(ui);
+        TagRulesEdit::new(
+            &mut state.content_editor.edited_pack.data.tag_rules,
+            &state.content_editor.edited_pack.data.curiosity_properties,
+        )
+        .show(ui);
     }
 
     fn resizable(&self) -> bool {

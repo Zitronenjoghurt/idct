@@ -1,4 +1,4 @@
-use crate::components::curiosity_property_definition_edit::CuriosityPropertyDefinitionEdit;
+use crate::components::curiosity_property::curiosity_property_definition_edit::CuriosityPropertyDefinitionEdit;
 use crate::components::list_edit::ListEdit;
 use crate::components::Component;
 use egui::Ui;

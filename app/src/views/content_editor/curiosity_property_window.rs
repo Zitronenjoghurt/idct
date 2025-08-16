@@ -1,4 +1,4 @@
-use crate::components::curiosity_property_definitions_edit::CuriosityPropertyDefinitionsEdit;
+use crate::components::curiosity_property::curiosity_property_definitions_edit::CuriosityPropertyDefinitionsEdit;
 use crate::components::Component;
 use crate::state::AppState;
 use crate::windows::ViewWindow;

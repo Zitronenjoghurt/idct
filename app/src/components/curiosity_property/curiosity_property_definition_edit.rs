@@ -16,6 +16,7 @@ impl<'a> CuriosityPropertyDefinitionEdit<'a> {
 impl Component for CuriosityPropertyDefinitionEdit<'_> {
     fn show(self, ui: &mut Ui) {
         Grid::new("curiosity_property_definition_edit")
+            .striped(true)
             .num_columns(2)
             .show(ui, |ui| {
                 ui.label("Identifier");

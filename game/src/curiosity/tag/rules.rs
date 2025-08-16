@@ -31,7 +31,7 @@ pub struct TagRule {
     pub negative: Vec<TagRuleTagRelation>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Default, Serialize, Deserialize)]
 pub struct TagRulePropertyRange {
     pub property: CuriosityPropertyID,
     pub min: f32,
