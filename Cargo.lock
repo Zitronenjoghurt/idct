@@ -914,6 +914,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "egui_plot"
+version = "0.33.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "524318041a8ea90c81c738e8985f8ad9e3f9bed636b03c2ff37b218113ed5121"
+dependencies = [
+ "ahash",
+ "egui",
+ "emath",
+ "serde",
+]
+
+[[package]]
 name = "emath"
 version = "0.32.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1422,6 +1434,7 @@ dependencies = [
  "egui",
  "egui-file-dialog",
  "egui-notify",
+ "egui_plot",
  "idct-game",
  "ron",
  "serde",
@@ -1434,6 +1447,7 @@ version = "0.1.0"
 dependencies = [
  "base64",
  "rand",
+ "rand_distr",
  "rmp-serde",
  "serde",
  "serde_json",
@@ -2306,6 +2320,16 @@ checksum = "99d9a13982dcf210057a8a78572b2217b667c3beacbf3a0d8b454f6f82837d38"
 dependencies = [
  "getrandom 0.3.3",
  "serde",
+]
+
+[[package]]
+name = "rand_distr"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6a8615d50dcf34fa31f7ab52692afec947c4dd0ab803cc87cb3b0b4570ff7463"
+dependencies = [
+ "num-traits",
+ "rand",
 ]
 
 [[package]]

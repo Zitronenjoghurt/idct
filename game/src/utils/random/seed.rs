@@ -50,6 +50,12 @@ impl From<&[u8]> for RandomSeed {
     }
 }
 
+impl From<u8> for RandomSeed {
+    fn from(value: u8) -> Self {
+        Self([value; 32])
+    }
+}
+
 impl Serialize for RandomSeed {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where

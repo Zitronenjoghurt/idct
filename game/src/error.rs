@@ -1,3 +1,4 @@
+use crate::utils::random::distribution::RandomDistributionError;
 use std::path::Path;
 use thiserror::Error;
 
@@ -17,6 +18,8 @@ pub enum GameError {
     MPDeserialization(#[from] rmp_serde::decode::Error),
     #[error("RMP Serialization error: {0}")]
     MPSerialization(#[from] rmp_serde::encode::Error),
+    #[error("Random distribution error: {0}")]
+    RandomDistribution(#[from] RandomDistributionError),
 }
 
 impl GameError {

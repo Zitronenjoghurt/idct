@@ -8,7 +8,7 @@ pub mod data;
 pub mod dimension;
 pub mod error;
 pub mod state;
-mod utils;
+pub mod utils;
 
 pub const CORE_DATA_BYTES: &[u8] = include_bytes!("./../../data/core_data.idct");
 
