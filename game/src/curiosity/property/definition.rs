@@ -1,5 +1,6 @@
 use crate::curiosity::property::id::CuriosityPropertyID;
 use crate::curiosity::property::types::CuriosityPropertyType;
+use crate::utils::traits::mergeable::Mergeable;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
@@ -17,4 +18,10 @@ impl CuriosityPropertyDefinitions {
 pub struct CuriosityPropertyDefinition {
     pub id: CuriosityPropertyID,
     pub property_type: CuriosityPropertyType,
+}
+
+impl Mergeable for CuriosityPropertyDefinitions {
+    fn merge(&mut self, other: Self) {
+        self.definitions.extend(other.definitions);
+    }
 }

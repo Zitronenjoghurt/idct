@@ -19,7 +19,7 @@ impl Component for CuriosityPropertyDefinitionEdit<'_> {
             .striped(true)
             .num_columns(2)
             .show(ui, |ui| {
-                ui.label("Identifier");
+                ui.label("ID");
                 ui.text_edit_singleline(self.definition.id.as_mut());
                 ui.end_row();
 

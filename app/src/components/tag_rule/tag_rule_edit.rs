@@ -33,7 +33,7 @@ impl Component for TagRuleEdit<'_> {
             .num_columns(2)
             .striped(true)
             .show(ui, |ui| {
-                ui.label("Identifier");
+                ui.label("ID");
                 ui.text_edit_singleline(self.tag_rule.id.as_mut());
                 ui.end_row();
 

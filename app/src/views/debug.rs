@@ -3,8 +3,7 @@ use crate::views::{View, ViewID};
 use egui::{
     Button, CentralPanel, Context, MenuBar, RichText, ScrollArea, TextEdit, TopBottomPanel,
 };
-use idct_game::curiosity::generation::layers::origin::OriginLayer;
-use idct_game::curiosity::generation::CuriosityGenerator;
+use idct_game::curiosity::Curiosity;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Serialize, Deserialize)]
@@ -38,8 +37,7 @@ impl DebugView {
     }
 
     fn on_generate_curiosity_clicked(&mut self) {
-        let generator = CuriosityGenerator::new().layer(OriginLayer::new());
-        let curiosity = generator.generate();
+        let curiosity = Curiosity::default();
         self.push_to_console(
             &serde_json::to_string_pretty(&curiosity)
                 .unwrap()

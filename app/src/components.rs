@@ -2,6 +2,7 @@ use egui::Ui;
 
 pub mod curiosity_property;
 pub mod data_pack_meta_edit;
+pub mod dimension;
 pub mod list_edit;
 pub mod property_selector;
 pub mod tag_rule;
