@@ -5,25 +5,28 @@ use crate::views::{View, ViewID};
 use egui::{Button, Context, MenuBar, RichText, SidePanel, TopBottomPanel};
 use serde::{Deserialize, Serialize};
 
+mod curiosity_generators_window;
 mod curiosity_property_window;
+mod curiosity_tags_window;
 mod data_pack_window;
 mod dimension_window;
-mod tag_edit_window;
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct ContentEditorView {
+    curiosity_generators_window: curiosity_generators_window::CuriosityGeneratorsWindow,
     curiosity_property_window: curiosity_property_window::CuriosityPropertyWindow,
+    curiosity_tags_window: curiosity_tags_window::CuriosityTagsWindow,
     data_pack_window: data_pack_window::DataPackWindow,
     dimension_window: dimension_window::DimensionWindow,
-    tag_edit_window: tag_edit_window::TagEditWindow,
 }
 
 impl ContentEditorView {
     fn render_windows(&mut self, ctx: &Context, state: &mut AppState) {
+        self.curiosity_generators_window.render(ctx, state);
         self.curiosity_property_window.render(ctx, state);
+        self.curiosity_tags_window.render(ctx, state);
         self.data_pack_window.render(ctx, state);
         self.dimension_window.render(ctx, state);
-        self.tag_edit_window.render(ctx, state);
     }
 
     fn on_home_clicked(&self, state: &mut AppState) {
@@ -51,9 +54,10 @@ impl View for ContentEditorView {
         SidePanel::left("content_editor_tag_editor_left_panel").show(ctx, |ui| {
             WindowMenu::new("Windows")
                 .window(&mut self.data_pack_window)
-                .window(&mut self.curiosity_property_window)
-                .window(&mut self.tag_edit_window)
                 .window(&mut self.dimension_window)
+                .window(&mut self.curiosity_property_window)
+                .window(&mut self.curiosity_tags_window)
+                .window(&mut self.curiosity_generators_window)
                 .show(ui);
         });
     }

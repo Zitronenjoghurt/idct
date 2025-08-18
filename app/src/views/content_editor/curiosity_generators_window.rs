@@ -1,4 +1,4 @@
-use crate::components::tag_rule::tag_rules_edit::TagRulesEdit;
+use crate::components::curiosity::generator::curiosity_generators_edit::CuriosityGeneratorsEdit;
 use crate::components::Component;
 use crate::state::AppState;
 use crate::windows::ViewWindow;
@@ -6,17 +6,17 @@ use egui::{Id, Ui, WidgetText};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Serialize, Deserialize)]
-pub struct TagEditWindow {
+pub struct CuriosityGeneratorsWindow {
     open: bool,
 }
 
-impl ViewWindow for TagEditWindow {
+impl ViewWindow for CuriosityGeneratorsWindow {
     fn id(&self) -> Id {
-        Id::new("content_editor_tag_edit_window")
+        Id::new("content_editor_curiosity_generators_window")
     }
 
     fn title(&self) -> impl Into<WidgetText> {
-        "Tag Editor"
+        "Curiosity Generators"
     }
 
     fn is_open(&self) -> bool {
@@ -28,10 +28,9 @@ impl ViewWindow for TagEditWindow {
     }
 
     fn render_content(&mut self, ui: &mut Ui, state: &mut AppState) {
-        TagRulesEdit::new(
-            &mut state.content_editor.edited_pack.data.tag_rules,
+        CuriosityGeneratorsEdit::new(
+            &mut state.content_editor.edited_pack.data.curiosity_generators,
             &state.content_editor.edited_pack.data.curiosity_properties,
-            &state.content_editor.cached_tag_ids,
         )
         .show(ui);
     }

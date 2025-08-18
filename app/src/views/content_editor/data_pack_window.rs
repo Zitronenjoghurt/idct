@@ -1,5 +1,4 @@
 use crate::components::data_pack_meta_edit::DataPackMetaEdit;
-use crate::components::random_distribution_edit::RandomDistributionEdit;
 use crate::components::Component;
 use crate::state::AppState;
 use crate::systems::file_picker::{FilePickerConfig, FilePickerMode};
@@ -90,10 +89,6 @@ impl ViewWindow for DataPackWindow {
                 self.on_export_idct_clicked(state);
             }
         });
-
-        ui.separator();
-
-        RandomDistributionEdit::new(&mut self.distribution).show(ui);
     }
 
     fn resizable(&self) -> bool {

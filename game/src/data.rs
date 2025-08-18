@@ -1,3 +1,4 @@
+use crate::curiosity::generator::CuriosityGenerators;
 use crate::curiosity::property::definition::CuriosityPropertyDefinitions;
 use crate::curiosity::tag::rules::TagRules;
 use crate::dimension::definition::DimensionDefinitions;
@@ -17,6 +18,8 @@ pub struct GameData {
     pub curiosity_properties: CuriosityPropertyDefinitions,
     #[serde(default, skip_serializing_if = "DimensionDefinitions::is_empty")]
     pub dimensions: DimensionDefinitions,
+    #[serde(default, skip_serializing_if = "CuriosityGenerators::is_empty")]
+    pub curiosity_generators: CuriosityGenerators,
 }
 
 impl GameData {

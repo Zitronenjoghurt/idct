@@ -1,6 +1,6 @@
 use egui::Ui;
 
-pub mod curiosity_property;
+pub mod curiosity;
 pub mod data_pack_meta_edit;
 pub mod dimension;
 pub mod list_edit;

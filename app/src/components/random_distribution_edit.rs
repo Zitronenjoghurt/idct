@@ -97,47 +97,49 @@ impl<'a> RandomDistributionEdit<'a> {
 
 impl Component for RandomDistributionEdit<'_> {
     fn show(self, ui: &mut Ui) {
-        let histogram = self.histogram();
-        self.show_plot(&histogram, ui);
+        ui.vertical(|ui| {
+            let histogram = self.histogram();
+            self.show_plot(&histogram, ui);
 
-        let current = match self.distribution {
-            RandomDistribution::Normal(_) => 0,
-            RandomDistribution::Uniform(_) => 1,
-        };
-        let mut selected = current;
-
-        egui::ComboBox::from_label("Type")
-            .selected_text(if current == 0 { "Normal" } else { "Uniform" })
-            .show_ui(ui, |ui| {
-                ui.selectable_value(&mut selected, 0, "Normal");
-                ui.selectable_value(&mut selected, 1, "Uniform");
-            });
-
-        if selected != current {
-            *self.distribution = if selected == 0 {
-                RandomDistribution::Normal(Default::default())
-            } else {
-                RandomDistribution::Uniform(Default::default())
+            let current = match self.distribution {
+                RandomDistribution::Normal(_) => 0,
+                RandomDistribution::Uniform(_) => 1,
             };
-        }
+            let mut selected = current;
 
-        match self.distribution {
-            RandomDistribution::Normal(normal) => {
-                ui.add(egui::Slider::new(&mut normal.mean, -10.0..=10.0).text("Mean"));
-                ui.add(egui::Slider::new(&mut normal.std_dev, 0.01..=5.0).text("Std Dev"));
-            }
-            RandomDistribution::Uniform(uniform) => {
-                ui.add(egui::Slider::new(&mut uniform.min, -10.0..=10.0).text("Min"));
-                ui.add(egui::Slider::new(&mut uniform.max, -10.0..=10.0).text("Max"));
-            }
-        }
+            egui::ComboBox::from_label("Type")
+                .selected_text(if current == 0 { "Normal" } else { "Uniform" })
+                .show_ui(ui, |ui| {
+                    ui.selectable_value(&mut selected, 0, "Normal");
+                    ui.selectable_value(&mut selected, 1, "Uniform");
+                });
 
-        ui.horizontal(|ui| {
-            ui.label(format!(
-                "Range: [{:.2}, {:.2}]",
-                histogram.min, histogram.max
-            ));
-            ui.label(format!("Mean: {:.2}", histogram.mean()));
+            if selected != current {
+                *self.distribution = if selected == 0 {
+                    RandomDistribution::Normal(Default::default())
+                } else {
+                    RandomDistribution::Uniform(Default::default())
+                };
+            }
+
+            match self.distribution {
+                RandomDistribution::Normal(normal) => {
+                    ui.add(egui::Slider::new(&mut normal.mean, -10.0..=10.0).text("Mean"));
+                    ui.add(egui::Slider::new(&mut normal.std_dev, 0.01..=5.0).text("Std Dev"));
+                }
+                RandomDistribution::Uniform(uniform) => {
+                    ui.add(egui::Slider::new(&mut uniform.min, -10.0..=10.0).text("Min"));
+                    ui.add(egui::Slider::new(&mut uniform.max, -10.0..=10.0).text("Max"));
+                }
+            }
+
+            ui.horizontal(|ui| {
+                ui.label(format!(
+                    "Range: [{:.2}, {:.2}]",
+                    histogram.min, histogram.max
+                ));
+                ui.label(format!("Mean: {:.2}", histogram.mean()));
+            });
         });
     }
 }

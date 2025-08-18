@@ -1,5 +1,4 @@
 use crate::curiosity::generator::property::CuriosityGeneratorProperties;
-use crate::dimension::id::DimensionID;
 use serde::{Deserialize, Serialize};
 
 pub mod property;
@@ -9,8 +8,14 @@ pub struct CuriosityGenerators {
     pub generators: Vec<CuriosityGenerator>,
 }
 
+impl CuriosityGenerators {
+    pub fn is_empty(&self) -> bool {
+        self.generators.is_empty()
+    }
+}
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct CuriosityGenerator {
-    pub dimension: Option<DimensionID>,
     pub properties: CuriosityGeneratorProperties,
+    pub name: String,
 }

@@ -2,7 +2,7 @@ use crate::curiosity::property::CuriosityProperty;
 use crate::dimension::id::DimensionID;
 use serde::{Deserialize, Serialize};
 
-mod generator;
+pub mod generator;
 pub mod property;
 pub mod tag;
 

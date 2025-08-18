@@ -62,37 +62,39 @@ where
     L: Fn(&T) -> String,
 {
     fn show(self, ui: &mut Ui) {
-        let mut to_remove = None;
+        ui.vertical(|ui| {
+            let mut to_remove = None;
 
-        let mut scroll_area = ScrollArea::vertical().id_salt(self.id);
-        if let Some(max_height) = self.max_height {
-            scroll_area = scroll_area.max_height(max_height);
-        }
-        if let Some(max_width) = self.max_width {
-            scroll_area = scroll_area.max_width(max_width);
-        }
+            let mut scroll_area = ScrollArea::vertical().id_salt(self.id);
+            if let Some(max_height) = self.max_height {
+                scroll_area = scroll_area.max_height(max_height);
+            }
+            if let Some(max_width) = self.max_width {
+                scroll_area = scroll_area.max_width(max_width);
+            }
 
-        scroll_area.show(ui, |ui| {
-            for (index, item) in self.items.iter_mut().enumerate() {
-                ui.horizontal(|ui| {
-                    if ui.button("🗑").clicked() {
-                        to_remove = Some(index);
-                    }
-                    CollapsingHeader::new((self.item_label)(item))
-                        .id_salt((self.id, index))
-                        .show(ui, |ui| {
-                            (self.item_render)(item, ui);
-                        });
-                });
+            scroll_area.show(ui, |ui| {
+                for (index, item) in self.items.iter_mut().enumerate() {
+                    ui.horizontal(|ui| {
+                        if ui.button("🗑").clicked() {
+                            to_remove = Some(index);
+                        }
+                        CollapsingHeader::new((self.item_label)(item))
+                            .id_salt((self.id, index))
+                            .show(ui, |ui| {
+                                (self.item_render)(item, ui);
+                            });
+                    });
+                }
+            });
+
+            if let Some(index) = to_remove {
+                self.items.remove(index);
+            }
+
+            if ui.button(self.add_label).clicked() {
+                self.items.push(T::default());
             }
         });
-
-        if let Some(index) = to_remove {
-            self.items.remove(index);
-        }
-
-        if ui.button(self.add_label).clicked() {
-            self.items.push(T::default());
-        }
     }
 }

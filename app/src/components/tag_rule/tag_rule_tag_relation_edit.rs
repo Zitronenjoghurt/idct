@@ -53,7 +53,6 @@ impl Component for TagRuleTagRelationEdit<'_> {
                     })
                     .show(ui);
                 ui.end_row();
-                ui.end_row();
 
                 ui.label("Factor");
                 ui.add(
