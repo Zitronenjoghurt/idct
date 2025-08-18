@@ -39,23 +39,19 @@ impl Component for TagRuleTagRelationEdit<'_> {
             .striped(true)
             .show(ui, |ui| {
                 ui.label("Tag");
-                PropertySelector::new(
-                    &mut self.relation.tag,
-                    self.cached_tag_ids,
-                    |tag_id| tag_id,
-                    |tag_id| tag_id.as_ref(),
-                )
-                .id(self.id)
-                .condition(|tag_id| {
-                    if tag_id.as_ref().is_empty() {
-                        return false;
-                    }
+                PropertySelector::new(&mut self.relation.tag, self.cached_tag_ids, |tag_id| tag_id)
+                    .id(self.id)
+                    .display(|tag_id| tag_id.as_ref())
+                    .condition(|tag_id| {
+                        if tag_id.as_ref().is_empty() {
+                            return false;
+                        }
 
-                    self.parent_tag_id
-                        .map(|parent_tag_id| tag_id != parent_tag_id)
-                        .unwrap_or(true)
-                })
-                .show(ui);
+                        self.parent_tag_id
+                            .map(|parent_tag_id| tag_id != parent_tag_id)
+                            .unwrap_or(true)
+                    })
+                    .show(ui);
                 ui.end_row();
                 ui.end_row();
 

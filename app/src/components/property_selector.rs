@@ -16,34 +16,19 @@ where
     condition: C,
 }
 
-impl<'a, T, I, P, D> PropertySelector<'a, T, I, P, D, fn(&I) -> bool>
+impl<'a, T, I, P> PropertySelector<'a, T, I, P, fn(&T) -> &str, fn(&I) -> bool>
 where
     P: Fn(&I) -> &T,
-    D: Fn(&T) -> &str,
     T: Clone + PartialEq,
 {
-    pub fn new(value: &'a mut T, items: &'a [I], get_property: P, display: D) -> Self {
+    pub fn new(value: &'a mut T, items: &'a [I], get_property: P) -> Self {
         Self {
             value,
             items,
             get_property,
-            display,
+            display: |_| "",
             condition: |_| true,
             id: "property_selector",
-        }
-    }
-
-    pub fn condition<C>(self, condition: C) -> PropertySelector<'a, T, I, P, D, C>
-    where
-        C: Fn(&I) -> bool,
-    {
-        PropertySelector {
-            value: self.value,
-            items: self.items,
-            get_property: self.get_property,
-            display: self.display,
-            condition,
-            id: self.id,
         }
     }
 }
@@ -55,6 +40,34 @@ where
     C: Fn(&I) -> bool,
     T: Clone + PartialEq,
 {
+    pub fn display<NewD>(self, display: NewD) -> PropertySelector<'a, T, I, P, NewD, C>
+    where
+        NewD: Fn(&T) -> &str,
+    {
+        PropertySelector {
+            value: self.value,
+            items: self.items,
+            get_property: self.get_property,
+            display,
+            condition: self.condition,
+            id: self.id,
+        }
+    }
+
+    pub fn condition<NewC>(self, condition: NewC) -> PropertySelector<'a, T, I, P, D, NewC>
+    where
+        NewC: Fn(&I) -> bool,
+    {
+        PropertySelector {
+            value: self.value,
+            items: self.items,
+            get_property: self.get_property,
+            display: self.display,
+            condition,
+            id: self.id,
+        }
+    }
+
     pub fn id(mut self, id: &'a str) -> Self {
         self.id = id;
         self

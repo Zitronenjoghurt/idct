@@ -39,10 +39,17 @@ impl Component for TagRuleEdit<'_> {
 
                 ui.label("Property Ranges");
                 ui.vertical(|ui| {
-                    ListEdit::new(&mut self.tag_rule.properties, |property_range, ui| {
-                        TagRulePropertyRangeEdit::new(property_range, self.property_definitions)
+                    ListEdit::new(
+                        &mut self.tag_rule.properties,
+                        |property_range, ui| {
+                            TagRulePropertyRangeEdit::new(
+                                property_range,
+                                self.property_definitions,
+                            )
                             .show(ui);
-                    })
+                        },
+                        |property_range| property_range.property.as_ref().to_string(),
+                    )
                     .id("tag_rule_edit_list_edit_property_ranges")
                     .max_height(100.0)
                     .max_width(200.0)
@@ -52,12 +59,16 @@ impl Component for TagRuleEdit<'_> {
 
                 ui.label("Positive Relations");
                 ui.vertical(|ui| {
-                    ListEdit::new(&mut self.tag_rule.positive, |tag_relation, ui| {
-                        TagRuleTagRelationEdit::new(tag_relation, self.cached_tag_ids)
-                            .id("tag_rule_edit_positive_relations")
-                            .parent_tag_id(&self.tag_rule.id)
-                            .show(ui);
-                    })
+                    ListEdit::new(
+                        &mut self.tag_rule.positive,
+                        |tag_relation, ui| {
+                            TagRuleTagRelationEdit::new(tag_relation, self.cached_tag_ids)
+                                .id("tag_rule_edit_positive_relations")
+                                .parent_tag_id(&self.tag_rule.id)
+                                .show(ui);
+                        },
+                        |tag_relation| tag_relation.tag.as_ref().to_string(),
+                    )
                     .id("tag_rule_edit_list_edit_positive_relations")
                     .max_height(100.0)
                     .max_width(200.0)
@@ -67,12 +78,16 @@ impl Component for TagRuleEdit<'_> {
 
                 ui.label("Negative Relations");
                 ui.vertical(|ui| {
-                    ListEdit::new(&mut self.tag_rule.negative, |tag_relation, ui| {
-                        TagRuleTagRelationEdit::new(tag_relation, self.cached_tag_ids)
-                            .id("tag_rule_edit_negative_relations")
-                            .parent_tag_id(&self.tag_rule.id)
-                            .show(ui);
-                    })
+                    ListEdit::new(
+                        &mut self.tag_rule.negative,
+                        |tag_relation, ui| {
+                            TagRuleTagRelationEdit::new(tag_relation, self.cached_tag_ids)
+                                .id("tag_rule_edit_negative_relations")
+                                .parent_tag_id(&self.tag_rule.id)
+                                .show(ui);
+                        },
+                        |tag_relation| tag_relation.tag.as_ref().to_string(),
+                    )
                     .id("tag_rule_edit_list_edit_negative_relations")
                     .max_height(100.0)
                     .max_width(200.0)

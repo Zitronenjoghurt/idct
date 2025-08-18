@@ -28,9 +28,13 @@ impl<'a> TagRulesEdit<'a> {
 
 impl Component for TagRulesEdit<'_> {
     fn show(self, ui: &mut Ui) {
-        ListEdit::new(&mut self.tag_rules.rules, |tag_rule, ui| {
-            TagRuleEdit::new(tag_rule, self.property_definitions, self.cached_tag_ids).show(ui);
-        })
+        ListEdit::new(
+            &mut self.tag_rules.rules,
+            |tag_rule, ui| {
+                TagRuleEdit::new(tag_rule, self.property_definitions, self.cached_tag_ids).show(ui);
+            },
+            |tag_rule| tag_rule.id.as_ref().to_string(),
+        )
         .show(ui);
     }
 }

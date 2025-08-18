@@ -33,8 +33,8 @@ impl Component for TagRulePropertyRangeEdit<'_> {
                     &mut self.property_range.property,
                     &self.property_definitions.definitions,
                     |property_def| &property_def.id,
-                    |property_id| property_id.as_ref(),
                 )
+                .display(|property_id| property_id.as_ref())
                 .condition(|property_def| {
                     property_def.property_type == CuriosityPropertyType::Normalized
                 })

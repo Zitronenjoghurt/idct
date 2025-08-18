@@ -16,9 +16,13 @@ impl<'a> DimensionDefinitionsEdit<'a> {
 
 impl Component for DimensionDefinitionsEdit<'_> {
     fn show(self, ui: &mut Ui) {
-        ListEdit::new(&mut self.definitions.definitions, |definition, ui| {
-            DimensionDefinitionEdit::new(definition).show(ui);
-        })
+        ListEdit::new(
+            &mut self.definitions.definitions,
+            |definition, ui| {
+                DimensionDefinitionEdit::new(definition).show(ui);
+            },
+            |definition| definition.id.as_ref().to_string(),
+        )
         .show(ui);
     }
 }

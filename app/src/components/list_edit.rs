@@ -1,28 +1,32 @@
 use crate::components::Component;
-use egui::{ScrollArea, Ui};
+use egui::{CollapsingHeader, ScrollArea, Ui};
 
-pub struct ListEdit<'a, T, F>
+pub struct ListEdit<'a, T, F, L>
 where
     T: Default,
     F: Fn(&mut T, &mut Ui),
+    L: Fn(&T) -> String,
 {
     items: &'a mut Vec<T>,
     item_render: F,
+    item_label: L,
     add_label: &'a str,
     max_height: Option<f32>,
     max_width: Option<f32>,
     id: &'a str,
 }
 
-impl<'a, T, F> ListEdit<'a, T, F>
+impl<'a, T, F, L> ListEdit<'a, T, F, L>
 where
     T: Default,
     F: Fn(&mut T, &mut Ui),
+    L: Fn(&T) -> String,
 {
-    pub fn new(items: &'a mut Vec<T>, item_render: F) -> Self {
+    pub fn new(items: &'a mut Vec<T>, item_render: F, item_label: L) -> Self {
         Self {
             items,
             item_render,
+            item_label,
             add_label: "Add",
             max_height: Some(400.0),
             max_width: Some(400.0),
@@ -51,10 +55,11 @@ where
     }
 }
 
-impl<T, F> Component for ListEdit<'_, T, F>
+impl<T, F, L> Component for ListEdit<'_, T, F, L>
 where
     T: Default,
     F: Fn(&mut T, &mut Ui),
+    L: Fn(&T) -> String,
 {
     fn show(self, ui: &mut Ui) {
         let mut to_remove = None;
@@ -69,14 +74,15 @@ where
 
         scroll_area.show(ui, |ui| {
             for (index, item) in self.items.iter_mut().enumerate() {
-                ui.push_id(index, |ui| {
-                    ui.horizontal(|ui| {
-                        (self.item_render)(item, ui);
-                        if ui.button("🗑").clicked() {
-                            to_remove = Some(index);
-                        }
-                    });
-                    ui.separator();
+                ui.horizontal(|ui| {
+                    if ui.button("🗑").clicked() {
+                        to_remove = Some(index);
+                    }
+                    CollapsingHeader::new((self.item_label)(item))
+                        .id_salt((self.id, index))
+                        .show(ui, |ui| {
+                            (self.item_render)(item, ui);
+                        });
                 });
             }
         });
