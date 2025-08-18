@@ -31,7 +31,7 @@ impl ViewWindow for CuriosityTagsWindow {
         TagRulesEdit::new(
             &mut state.content_editor.edited_pack.data.tag_rules,
             &state.content_editor.edited_pack.data.curiosity_properties,
-            &state.content_editor.cached_tag_ids,
+            &state.content_editor.context,
         )
         .show(ui);
     }

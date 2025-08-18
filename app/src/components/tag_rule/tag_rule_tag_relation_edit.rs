@@ -1,21 +1,22 @@
 use crate::components::property_selector::PropertySelector;
 use crate::components::Component;
+use crate::systems::content_editor::context::ContentEditorContext;
 use egui::{Grid, Ui};
 use idct_game::curiosity::tag::id::TagID;
 use idct_game::curiosity::tag::rules::TagRuleTagRelation;
 
 pub struct TagRuleTagRelationEdit<'a> {
     relation: &'a mut TagRuleTagRelation,
-    cached_tag_ids: &'a [TagID],
+    context: &'a ContentEditorContext,
     parent_tag_id: Option<&'a TagID>,
     id: &'a str,
 }
 
 impl<'a> TagRuleTagRelationEdit<'a> {
-    pub fn new(relation: &'a mut TagRuleTagRelation, tag_ids: &'a [TagID]) -> Self {
+    pub fn new(relation: &'a mut TagRuleTagRelation, context: &'a ContentEditorContext) -> Self {
         Self {
             relation,
-            cached_tag_ids: tag_ids,
+            context,
             parent_tag_id: None,
             id: "tag_rule_tag_relation_edit",
         }
@@ -39,19 +40,23 @@ impl Component for TagRuleTagRelationEdit<'_> {
             .striped(true)
             .show(ui, |ui| {
                 ui.label("Tag");
-                PropertySelector::new(&mut self.relation.tag, self.cached_tag_ids, |tag_id| tag_id)
-                    .id(self.id)
-                    .display(|tag_id| tag_id.as_ref())
-                    .condition(|tag_id| {
-                        if tag_id.as_ref().is_empty() {
-                            return false;
-                        }
+                PropertySelector::new(
+                    &mut self.relation.tag,
+                    &self.context.cached_tag_ids,
+                    |tag_id| tag_id,
+                )
+                .id(self.id)
+                .display(|tag_id| tag_id.as_ref())
+                .condition(|tag_id| {
+                    if tag_id.as_ref().is_empty() {
+                        return false;
+                    }
 
-                        self.parent_tag_id
-                            .map(|parent_tag_id| tag_id != parent_tag_id)
-                            .unwrap_or(true)
-                    })
-                    .show(ui);
+                    self.parent_tag_id
+                        .map(|parent_tag_id| tag_id != parent_tag_id)
+                        .unwrap_or(true)
+                })
+                .show(ui);
                 ui.end_row();
 
                 ui.label("Factor");

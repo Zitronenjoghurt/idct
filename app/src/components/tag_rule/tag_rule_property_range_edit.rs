@@ -37,6 +37,7 @@ impl Component for TagRulePropertyRangeEdit<'_> {
                 .display(|property_id| property_id.as_ref())
                 .condition(|property_def| {
                     property_def.property_type == CuriosityPropertyType::Normalized
+                        && !property_def.id.as_ref().is_empty()
                 })
                 .id("property_range_property_selector")
                 .show(ui);

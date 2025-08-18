@@ -2,27 +2,27 @@ use crate::components::list_edit::ListEdit;
 use crate::components::tag_rule::tag_rule_property_range_edit::TagRulePropertyRangeEdit;
 use crate::components::tag_rule::tag_rule_tag_relation_edit::TagRuleTagRelationEdit;
 use crate::components::Component;
+use crate::systems::content_editor::context::ContentEditorContext;
 use egui::{Grid, Ui};
 use idct_game::curiosity::property::definition::CuriosityPropertyDefinitions;
-use idct_game::curiosity::tag::id::TagID;
 use idct_game::curiosity::tag::rules::TagRule;
 
 pub struct TagRuleEdit<'a> {
     tag_rule: &'a mut TagRule,
     property_definitions: &'a CuriosityPropertyDefinitions,
-    cached_tag_ids: &'a [TagID],
+    context: &'a ContentEditorContext,
 }
 
 impl<'a> TagRuleEdit<'a> {
     pub fn new(
         tag_rule: &'a mut TagRule,
         property_definitions: &'a CuriosityPropertyDefinitions,
-        cached_tag_ids: &'a [TagID],
+        context: &'a ContentEditorContext,
     ) -> Self {
         Self {
             tag_rule,
             property_definitions,
-            cached_tag_ids,
+            context,
         }
     }
 }
@@ -62,7 +62,7 @@ impl Component for TagRuleEdit<'_> {
                     ListEdit::new(
                         &mut self.tag_rule.positive,
                         |tag_relation, ui| {
-                            TagRuleTagRelationEdit::new(tag_relation, self.cached_tag_ids)
+                            TagRuleTagRelationEdit::new(tag_relation, self.context)
                                 .id("tag_rule_edit_positive_relations")
                                 .parent_tag_id(&self.tag_rule.id)
                                 .show(ui);
@@ -81,7 +81,7 @@ impl Component for TagRuleEdit<'_> {
                     ListEdit::new(
                         &mut self.tag_rule.negative,
                         |tag_relation, ui| {
-                            TagRuleTagRelationEdit::new(tag_relation, self.cached_tag_ids)
+                            TagRuleTagRelationEdit::new(tag_relation, self.context)
                                 .id("tag_rule_edit_negative_relations")
                                 .parent_tag_id(&self.tag_rule.id)
                                 .show(ui);

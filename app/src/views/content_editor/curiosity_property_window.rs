@@ -30,6 +30,7 @@ impl ViewWindow for CuriosityPropertyWindow {
     fn render_content(&mut self, ui: &mut Ui, state: &mut AppState) {
         CuriosityPropertyDefinitionsEdit::new(
             &mut state.content_editor.edited_pack.data.curiosity_properties,
+            &state.content_editor.context,
         )
         .show(ui);
     }

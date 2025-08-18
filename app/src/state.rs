@@ -1,11 +1,9 @@
-use crate::state::content_editor::ContentEditorState;
+use crate::systems::content_editor::ContentEditor;
 use crate::systems::file_picker::FilePicker;
 use crate::systems::toasts::ToastSystem;
 use crate::views::ViewID;
 use egui::Context;
 use serde::{Deserialize, Serialize};
-
-mod content_editor;
 
 #[derive(Default, Serialize, Deserialize)]
 pub struct AppState {
@@ -14,7 +12,7 @@ pub struct AppState {
     pub toasts: ToastSystem,
     #[serde(skip)]
     pub file_picker: FilePicker,
-    pub content_editor: ContentEditorState,
+    pub content_editor: ContentEditor,
 }
 
 impl AppState {

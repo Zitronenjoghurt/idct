@@ -37,5 +37,6 @@ impl Mergeable for GameData {
         self.tag_rules.merge(other.tag_rules);
         self.curiosity_properties.merge(other.curiosity_properties);
         self.dimensions.merge(other.dimensions);
+        self.curiosity_generators.merge(other.curiosity_generators);
     }
 }

@@ -1,15 +1,23 @@
 use crate::components::Component;
+use crate::systems::content_editor::context::ContentEditorContext;
 use egui::{Grid, Ui};
 use idct_game::curiosity::property::definition::CuriosityPropertyDefinition;
 use idct_game::curiosity::property::types::CuriosityPropertyType;
 
 pub struct CuriosityPropertyDefinitionEdit<'a> {
     definition: &'a mut CuriosityPropertyDefinition,
+    context: &'a ContentEditorContext,
 }
 
 impl<'a> CuriosityPropertyDefinitionEdit<'a> {
-    pub fn new(definition: &'a mut CuriosityPropertyDefinition) -> Self {
-        Self { definition }
+    pub fn new(
+        definition: &'a mut CuriosityPropertyDefinition,
+        context: &'a ContentEditorContext,
+    ) -> Self {
+        Self {
+            definition,
+            context,
+        }
     }
 }
 
@@ -20,7 +28,11 @@ impl Component for CuriosityPropertyDefinitionEdit<'_> {
             .num_columns(2)
             .show(ui, |ui| {
                 ui.label("ID");
-                ui.text_edit_singleline(self.definition.id.as_mut());
+                let mut id = self.definition.id.as_ref().to_string();
+                if ui.text_edit_singleline(&mut id).changed() {
+                    self.context
+                        .rename_curiosity_property(self.definition.id.as_ref(), id);
+                };
                 ui.end_row();
 
                 ui.label("Type");

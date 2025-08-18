@@ -1,4 +1,5 @@
 use crate::curiosity::generator::property::CuriosityGeneratorProperties;
+use crate::utils::traits::mergeable::Mergeable;
 use serde::{Deserialize, Serialize};
 
 pub mod property;
@@ -18,4 +19,10 @@ impl CuriosityGenerators {
 pub struct CuriosityGenerator {
     pub properties: CuriosityGeneratorProperties,
     pub name: String,
+}
+
+impl Mergeable for CuriosityGenerators {
+    fn merge(&mut self, other: Self) {
+        self.generators.extend(other.generators);
+    }
 }

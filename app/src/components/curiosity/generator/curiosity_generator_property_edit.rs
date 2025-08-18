@@ -35,6 +35,7 @@ impl Component for CuriosityGeneratorPropertyEdit<'_> {
                     |property_def| &property_def.id,
                 )
                 .display(|property_id| property_id.as_ref())
+                .condition(|property_def| !property_def.id.as_ref().is_empty())
                 .id("curiosity_generator_property_edit_property_selector")
                 .show(ui);
                 ui.end_row();
