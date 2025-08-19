@@ -1,40 +1,54 @@
+use crate::components::curiosity::tag::curiosity_tag_rule_property_range_edit::CuriosityTagRulePropertyRangeEdit;
+use crate::components::curiosity::tag::curiosity_tag_rule_tag_relation_edit::CuriosityTagRuleTagRelationEdit;
 use crate::components::list_edit::ListEdit;
-use crate::components::tag_rule::tag_rule_property_range_edit::TagRulePropertyRangeEdit;
-use crate::components::tag_rule::tag_rule_tag_relation_edit::TagRuleTagRelationEdit;
+use crate::components::property_selector::PropertySelector;
 use crate::components::Component;
 use crate::systems::content_editor::context::ContentEditorContext;
 use egui::{Grid, Ui};
-use idct_game::curiosity::property::definition::CuriosityPropertyDefinitions;
-use idct_game::curiosity::tag::rules::TagRule;
+use idct_game::data::curiosity::property::definition::CuriosityPropertyDefinitions;
+use idct_game::data::curiosity::tag::definition::CuriosityTagDefinitions;
+use idct_game::data::curiosity::tag::rules::CuriosityTagRule;
 
-pub struct TagRuleEdit<'a> {
-    tag_rule: &'a mut TagRule,
+pub struct CuriosityTagRuleEdit<'a> {
+    tag_rule: &'a mut CuriosityTagRule,
     property_definitions: &'a CuriosityPropertyDefinitions,
+    tag_definitions: &'a CuriosityTagDefinitions,
     context: &'a ContentEditorContext,
 }
 
-impl<'a> TagRuleEdit<'a> {
+impl<'a> CuriosityTagRuleEdit<'a> {
     pub fn new(
-        tag_rule: &'a mut TagRule,
+        tag_rule: &'a mut CuriosityTagRule,
         property_definitions: &'a CuriosityPropertyDefinitions,
+        tag_definitions: &'a CuriosityTagDefinitions,
         context: &'a ContentEditorContext,
     ) -> Self {
         Self {
             tag_rule,
             property_definitions,
+            tag_definitions,
             context,
         }
     }
 }
 
-impl Component for TagRuleEdit<'_> {
+impl Component for CuriosityTagRuleEdit<'_> {
     fn show(self, ui: &mut Ui) {
         Grid::new("tag_rule_edit")
             .num_columns(2)
             .striped(true)
             .show(ui, |ui| {
                 ui.label("ID");
-                ui.text_edit_singleline(self.tag_rule.id.as_mut());
+                PropertySelector::new(
+                    &mut self.tag_rule.tag_id,
+                    &self.tag_definitions.definitions,
+                    |tag_def| &tag_def.id,
+                )
+                .display(|tag_id| tag_id.as_ref())
+                .condition(|tag_def| !tag_def.id.is_empty())
+                .id("tag_rule_edit_tag_id_selector")
+                .show(ui);
+                ui.end_row();
                 ui.end_row();
 
                 ui.label("Property Ranges");
@@ -42,7 +56,7 @@ impl Component for TagRuleEdit<'_> {
                     ListEdit::new(
                         &mut self.tag_rule.properties,
                         |property_range, ui| {
-                            TagRulePropertyRangeEdit::new(
+                            CuriosityTagRulePropertyRangeEdit::new(
                                 property_range,
                                 self.property_definitions,
                             )
@@ -62,9 +76,9 @@ impl Component for TagRuleEdit<'_> {
                     ListEdit::new(
                         &mut self.tag_rule.positive,
                         |tag_relation, ui| {
-                            TagRuleTagRelationEdit::new(tag_relation, self.context)
+                            CuriosityTagRuleTagRelationEdit::new(tag_relation, self.context)
                                 .id("tag_rule_edit_positive_relations")
-                                .parent_tag_id(&self.tag_rule.id)
+                                .parent_tag_id(&self.tag_rule.tag_id)
                                 .show(ui);
                         },
                         |tag_relation| tag_relation.tag.as_ref().to_string(),
@@ -81,9 +95,9 @@ impl Component for TagRuleEdit<'_> {
                     ListEdit::new(
                         &mut self.tag_rule.negative,
                         |tag_relation, ui| {
-                            TagRuleTagRelationEdit::new(tag_relation, self.context)
+                            CuriosityTagRuleTagRelationEdit::new(tag_relation, self.context)
                                 .id("tag_rule_edit_negative_relations")
-                                .parent_tag_id(&self.tag_rule.id)
+                                .parent_tag_id(&self.tag_rule.tag_id)
                                 .show(ui);
                         },
                         |tag_relation| tag_relation.tag.as_ref().to_string(),

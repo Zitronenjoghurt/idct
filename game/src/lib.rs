@@ -24,6 +24,7 @@ impl Game {
     }
 
     pub fn initialize(&mut self) -> GameResult<()> {
+        //self.data = DataPack::default().data;
         self.data = DataPack::from_core_data()?.data;
         Ok(())
     }

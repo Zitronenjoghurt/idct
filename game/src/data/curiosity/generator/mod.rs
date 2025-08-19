@@ -1,4 +1,4 @@
-use crate::curiosity::generator::property::CuriosityGeneratorProperties;
+use crate::data::curiosity::generator::property::CuriosityGeneratorProperties;
 use crate::utils::traits::mergeable::Mergeable;
 use serde::{Deserialize, Serialize};
 

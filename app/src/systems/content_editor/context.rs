@@ -1,12 +1,12 @@
 use crate::systems::content_editor::actions::ContentEditorAction;
-use idct_game::curiosity::tag::id::TagID;
+use idct_game::data::curiosity::tag::id::CuriosityTagID;
 use idct_game::data::GameData;
 use std::cell::RefCell;
 
 #[derive(Debug, Default)]
 pub struct ContentEditorContext {
     action_queue: RefCell<Vec<ContentEditorAction>>,
-    pub cached_tag_ids: Vec<TagID>,
+    pub cached_tag_ids: Vec<CuriosityTagID>,
 }
 
 impl ContentEditorContext {
@@ -29,6 +29,13 @@ impl ContentEditorContext {
         })
     }
 
+    pub fn rename_curiosity_tag(&self, old: impl Into<String>, new: impl Into<String>) {
+        self.push_action(ContentEditorAction::RenameCuriosityTag {
+            old: old.into(),
+            new: new.into(),
+        })
+    }
+
     pub fn push_action(&self, action: ContentEditorAction) {
         if let Ok(mut queue) = self.action_queue.try_borrow_mut() {
             queue.push(action)
@@ -37,10 +44,10 @@ impl ContentEditorContext {
 
     fn update_tag_ids(&mut self, data: &GameData) {
         self.cached_tag_ids = data
-            .tag_rules
+            .curiosity_tag_rules
             .rules
             .iter()
-            .map(|rule| rule.id.clone())
+            .map(|rule| rule.tag_id.clone())
             .collect();
     }
 }

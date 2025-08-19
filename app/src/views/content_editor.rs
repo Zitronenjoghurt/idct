@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 
 mod curiosity_generators_window;
 mod curiosity_property_window;
+mod curiosity_tag_rules_window;
 mod curiosity_tags_window;
 mod data_pack_window;
 mod dimension_window;
@@ -16,6 +17,7 @@ pub struct ContentEditorView {
     curiosity_generators_window: curiosity_generators_window::CuriosityGeneratorsWindow,
     curiosity_property_window: curiosity_property_window::CuriosityPropertyWindow,
     curiosity_tags_window: curiosity_tags_window::CuriosityTagsWindow,
+    curiosity_tag_rules_window: curiosity_tag_rules_window::CuriosityTagRulesWindow,
     data_pack_window: data_pack_window::DataPackWindow,
     dimension_window: dimension_window::DimensionWindow,
 }
@@ -25,6 +27,7 @@ impl ContentEditorView {
         self.curiosity_generators_window.render(ctx, state);
         self.curiosity_property_window.render(ctx, state);
         self.curiosity_tags_window.render(ctx, state);
+        self.curiosity_tag_rules_window.render(ctx, state);
         self.data_pack_window.render(ctx, state);
         self.dimension_window.render(ctx, state);
     }
@@ -57,6 +60,7 @@ impl View for ContentEditorView {
                 .window(&mut self.dimension_window)
                 .window(&mut self.curiosity_property_window)
                 .window(&mut self.curiosity_tags_window)
+                .window(&mut self.curiosity_tag_rules_window)
                 .window(&mut self.curiosity_generators_window)
                 .show(ui);
         });

@@ -1,8 +1,8 @@
 use crate::components::Component;
 use crate::systems::content_editor::context::ContentEditorContext;
 use egui::{Grid, Ui};
-use idct_game::curiosity::property::definition::CuriosityPropertyDefinition;
-use idct_game::curiosity::property::types::CuriosityPropertyType;
+use idct_game::data::curiosity::property::definition::CuriosityPropertyDefinition;
+use idct_game::data::curiosity::property::types::CuriosityPropertyType;
 
 pub struct CuriosityPropertyDefinitionEdit<'a> {
     definition: &'a mut CuriosityPropertyDefinition,

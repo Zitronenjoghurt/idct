@@ -2,8 +2,8 @@ use crate::components::property_selector::PropertySelector;
 use crate::components::random_distribution_edit::RandomDistributionEdit;
 use crate::components::Component;
 use egui::{Grid, Ui};
-use idct_game::curiosity::generator::property::CuriosityGeneratorProperty;
-use idct_game::curiosity::property::definition::CuriosityPropertyDefinitions;
+use idct_game::data::curiosity::generator::property::CuriosityGeneratorProperty;
+use idct_game::data::curiosity::property::definition::CuriosityPropertyDefinitions;
 
 pub struct CuriosityGeneratorPropertyEdit<'a> {
     generator_property: &'a mut CuriosityGeneratorProperty,

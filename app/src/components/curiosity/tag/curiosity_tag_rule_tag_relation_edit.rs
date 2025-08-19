@@ -2,18 +2,21 @@ use crate::components::property_selector::PropertySelector;
 use crate::components::Component;
 use crate::systems::content_editor::context::ContentEditorContext;
 use egui::{Grid, Ui};
-use idct_game::curiosity::tag::id::TagID;
-use idct_game::curiosity::tag::rules::TagRuleTagRelation;
+use idct_game::data::curiosity::tag::id::CuriosityTagID;
+use idct_game::data::curiosity::tag::rules::CuriosityTagRuleTagRelation;
 
-pub struct TagRuleTagRelationEdit<'a> {
-    relation: &'a mut TagRuleTagRelation,
+pub struct CuriosityTagRuleTagRelationEdit<'a> {
+    relation: &'a mut CuriosityTagRuleTagRelation,
     context: &'a ContentEditorContext,
-    parent_tag_id: Option<&'a TagID>,
+    parent_tag_id: Option<&'a CuriosityTagID>,
     id: &'a str,
 }
 
-impl<'a> TagRuleTagRelationEdit<'a> {
-    pub fn new(relation: &'a mut TagRuleTagRelation, context: &'a ContentEditorContext) -> Self {
+impl<'a> CuriosityTagRuleTagRelationEdit<'a> {
+    pub fn new(
+        relation: &'a mut CuriosityTagRuleTagRelation,
+        context: &'a ContentEditorContext,
+    ) -> Self {
         Self {
             relation,
             context,
@@ -27,13 +30,13 @@ impl<'a> TagRuleTagRelationEdit<'a> {
         self
     }
 
-    pub fn parent_tag_id(mut self, parent_tag_id: &'a TagID) -> Self {
+    pub fn parent_tag_id(mut self, parent_tag_id: &'a CuriosityTagID) -> Self {
         self.parent_tag_id = Some(parent_tag_id);
         self
     }
 }
 
-impl Component for TagRuleTagRelationEdit<'_> {
+impl Component for CuriosityTagRuleTagRelationEdit<'_> {
     fn show(self, ui: &mut Ui) {
         Grid::new(self.id)
             .num_columns(2)

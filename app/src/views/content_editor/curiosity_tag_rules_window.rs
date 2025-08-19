@@ -1,4 +1,4 @@
-use crate::components::curiosity::tag::curiosity_tag_definitions_edit::CuriosityTagDefinitionsEdit;
+use crate::components::curiosity::tag::curiosity_tag_rules_edit::CuriosityTagRulesEdit;
 use crate::components::Component;
 use crate::state::AppState;
 use crate::windows::ViewWindow;
@@ -6,17 +6,17 @@ use egui::{Id, Ui, WidgetText};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Serialize, Deserialize)]
-pub struct CuriosityTagsWindow {
+pub struct CuriosityTagRulesWindow {
     open: bool,
 }
 
-impl ViewWindow for CuriosityTagsWindow {
+impl ViewWindow for CuriosityTagRulesWindow {
     fn id(&self) -> Id {
-        Id::new("content_editor_curiosity_tags_window")
+        Id::new("content_editor_curiosity_tag_rules_window")
     }
 
     fn title(&self) -> impl Into<WidgetText> {
-        "Curiosity Tags"
+        "Curiosity Tag Rules"
     }
 
     fn is_open(&self) -> bool {
@@ -28,8 +28,10 @@ impl ViewWindow for CuriosityTagsWindow {
     }
 
     fn render_content(&mut self, ui: &mut Ui, state: &mut AppState) {
-        CuriosityTagDefinitionsEdit::new(
-            &mut state
+        CuriosityTagRulesEdit::new(
+            &mut state.content_editor.edited_pack.data.curiosity_tag_rules,
+            &state.content_editor.edited_pack.data.curiosity_properties,
+            &state
                 .content_editor
                 .edited_pack
                 .data

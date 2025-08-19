@@ -7,6 +7,10 @@ impl CuriosityPropertyID {
     pub fn set(&mut self, id: impl Into<String>) {
         self.0 = id.into();
     }
+
+    pub fn is_empty(&self) -> bool {
+        self.0.is_empty()
+    }
 }
 
 impl From<String> for CuriosityPropertyID {

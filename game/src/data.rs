@@ -1,16 +1,20 @@
-use crate::curiosity::generator::CuriosityGenerators;
-use crate::curiosity::property::definition::CuriosityPropertyDefinitions;
-use crate::curiosity::tag::rules::TagRules;
+use crate::data::curiosity::tag::definition::CuriosityTagDefinitions;
 use crate::dimension::definition::DimensionDefinitions;
 use crate::utils::traits::mergeable::Mergeable;
+use curiosity::generator::CuriosityGenerators;
+use curiosity::property::definition::CuriosityPropertyDefinitions;
+use curiosity::tag::rules::CuriosityTagRules;
 use serde::{Deserialize, Serialize};
 
+pub mod curiosity;
 pub mod pack;
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct GameData {
-    #[serde(default, skip_serializing_if = "TagRules::is_empty")]
-    pub tag_rules: TagRules,
+    #[serde(default, skip_serializing_if = "CuriosityTagDefinitions::is_empty")]
+    pub curiosity_tag_definitions: CuriosityTagDefinitions,
+    #[serde(default, skip_serializing_if = "CuriosityTagRules::is_empty")]
+    pub curiosity_tag_rules: CuriosityTagRules,
     #[serde(
         default,
         skip_serializing_if = "CuriosityPropertyDefinitions::is_empty"
@@ -34,7 +38,9 @@ impl GameData {
 
 impl Mergeable for GameData {
     fn merge(&mut self, other: Self) {
-        self.tag_rules.merge(other.tag_rules);
+        self.curiosity_tag_definitions
+            .merge(other.curiosity_tag_definitions);
+        self.curiosity_tag_rules.merge(other.curiosity_tag_rules);
         self.curiosity_properties.merge(other.curiosity_properties);
         self.dimensions.merge(other.dimensions);
         self.curiosity_generators.merge(other.curiosity_generators);

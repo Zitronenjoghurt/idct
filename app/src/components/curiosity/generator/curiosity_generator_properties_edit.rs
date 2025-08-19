@@ -2,8 +2,8 @@ use crate::components::curiosity::generator::curiosity_generator_property_edit::
 use crate::components::list_edit::ListEdit;
 use crate::components::Component;
 use egui::Ui;
-use idct_game::curiosity::generator::property::CuriosityGeneratorProperties;
-use idct_game::curiosity::property::definition::CuriosityPropertyDefinitions;
+use idct_game::data::curiosity::generator::property::CuriosityGeneratorProperties;
+use idct_game::data::curiosity::property::definition::CuriosityPropertyDefinitions;
 
 pub struct CuriosityGeneratorPropertiesEdit<'a> {
     generator_properties: &'a mut CuriosityGeneratorProperties,

@@ -1,45 +1,45 @@
-use crate::curiosity::property::id::CuriosityPropertyID;
-use crate::curiosity::tag::id::TagID;
+use crate::data::curiosity::property::id::CuriosityPropertyID;
+use crate::data::curiosity::tag::id::CuriosityTagID;
 use crate::utils::traits::mergeable::Mergeable;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Serialize, Deserialize)]
-pub struct TagRules {
-    pub rules: Vec<TagRule>,
+pub struct CuriosityTagRules {
+    pub rules: Vec<CuriosityTagRule>,
 }
 
-impl TagRules {
+impl CuriosityTagRules {
     pub fn is_empty(&self) -> bool {
         self.rules.is_empty()
     }
 }
 
-impl Mergeable for TagRules {
+impl Mergeable for CuriosityTagRules {
     fn merge(&mut self, other: Self) {
         self.rules.merge(other.rules);
     }
 }
 
 #[derive(Debug, Default, Serialize, Deserialize)]
-pub struct TagRule {
-    pub id: TagID,
+pub struct CuriosityTagRule {
+    pub tag_id: CuriosityTagID,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
-    pub properties: Vec<TagRulePropertyRange>,
+    pub properties: Vec<CuriosityTagRulePropertyRange>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
-    pub positive: Vec<TagRuleTagRelation>,
+    pub positive: Vec<CuriosityTagRuleTagRelation>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
-    pub negative: Vec<TagRuleTagRelation>,
+    pub negative: Vec<CuriosityTagRuleTagRelation>,
 }
 
 #[derive(Debug, Default, Serialize, Deserialize)]
-pub struct TagRulePropertyRange {
+pub struct CuriosityTagRulePropertyRange {
     pub property: CuriosityPropertyID,
     pub min: f32,
     pub max: f32,
 }
 
 #[derive(Debug, Default, Serialize, Deserialize)]
-pub struct TagRuleTagRelation {
-    pub tag: TagID,
+pub struct CuriosityTagRuleTagRelation {
+    pub tag: CuriosityTagID,
     pub factor: f32,
 }

@@ -1,4 +1,4 @@
-use crate::curiosity::property::id::CuriosityPropertyID;
+use crate::data::curiosity::property::id::CuriosityPropertyID;
 use crate::utils::random::distribution::RandomDistribution;
 use serde::{Deserialize, Serialize};
 

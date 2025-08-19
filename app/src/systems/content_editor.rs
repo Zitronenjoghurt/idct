@@ -34,6 +34,9 @@ impl ContentEditor {
             ContentEditorAction::RenameCuriosityProperty { old, new } => {
                 self.rename_curiosity_property(old, new)
             }
+            ContentEditorAction::RenameCuriosityTag { old, new } => {
+                self.rename_curiosity_tag(old, new)
+            }
         }
     }
 
@@ -41,15 +44,7 @@ impl ContentEditor {
         if new.is_empty() {
             return;
         }
-
-        if self
-            .edited_pack
-            .data
-            .curiosity_properties
-            .definitions
-            .iter()
-            .any(|def| def.id.as_ref() == new)
-        {
+        if self.edited_pack.data.curiosity_properties.id_exists(&new) {
             return;
         }
 
@@ -57,15 +52,13 @@ impl ContentEditor {
             .edited_pack
             .data
             .curiosity_properties
-            .definitions
-            .iter_mut()
-            .find(|def| def.id.as_ref() == old)
+            .find_by_id_mut(&old)
         else {
             return;
         };
         curiosity_property.id.set(&new);
 
-        for tag_rule in self.edited_pack.data.tag_rules.rules.iter_mut() {
+        for tag_rule in self.edited_pack.data.curiosity_tag_rules.rules.iter_mut() {
             for property_range in tag_rule.properties.iter_mut() {
                 if property_range.property.as_ref() == old {
                     property_range.property.set(&new);
@@ -84,6 +77,36 @@ impl ContentEditor {
                 if generator_property.property.as_ref() == old {
                     generator_property.property.set(&new);
                 }
+            }
+        }
+    }
+
+    fn rename_curiosity_tag(&mut self, old: String, new: String) {
+        if new.is_empty() {
+            return;
+        }
+        if self
+            .edited_pack
+            .data
+            .curiosity_tag_definitions
+            .id_exists(&new)
+        {
+            return;
+        }
+
+        let Some(curiosity_tag) = self
+            .edited_pack
+            .data
+            .curiosity_tag_definitions
+            .find_by_id_mut(&old)
+        else {
+            return;
+        };
+        curiosity_tag.id.set(&new);
+
+        for tag_rule in self.edited_pack.data.curiosity_tag_rules.rules.iter_mut() {
+            if tag_rule.tag_id.as_ref() == old {
+                tag_rule.tag_id.set(&new);
             }
         }
     }

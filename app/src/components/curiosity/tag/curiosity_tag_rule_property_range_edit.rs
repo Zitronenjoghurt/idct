@@ -1,18 +1,18 @@
 use crate::components::property_selector::PropertySelector;
 use crate::components::Component;
 use egui::{Grid, Ui};
-use idct_game::curiosity::property::definition::CuriosityPropertyDefinitions;
-use idct_game::curiosity::property::types::CuriosityPropertyType;
-use idct_game::curiosity::tag::rules::TagRulePropertyRange;
+use idct_game::data::curiosity::property::definition::CuriosityPropertyDefinitions;
+use idct_game::data::curiosity::property::types::CuriosityPropertyType;
+use idct_game::data::curiosity::tag::rules::CuriosityTagRulePropertyRange;
 
-pub struct TagRulePropertyRangeEdit<'a> {
-    property_range: &'a mut TagRulePropertyRange,
+pub struct CuriosityTagRulePropertyRangeEdit<'a> {
+    property_range: &'a mut CuriosityTagRulePropertyRange,
     property_definitions: &'a CuriosityPropertyDefinitions,
 }
 
-impl<'a> TagRulePropertyRangeEdit<'a> {
+impl<'a> CuriosityTagRulePropertyRangeEdit<'a> {
     pub fn new(
-        property_range: &'a mut TagRulePropertyRange,
+        property_range: &'a mut CuriosityTagRulePropertyRange,
         property_definitions: &'a CuriosityPropertyDefinitions,
     ) -> Self {
         Self {
@@ -22,7 +22,7 @@ impl<'a> TagRulePropertyRangeEdit<'a> {
     }
 }
 
-impl Component for TagRulePropertyRangeEdit<'_> {
+impl Component for CuriosityTagRulePropertyRangeEdit<'_> {
     fn show(self, ui: &mut Ui) {
         Grid::new("tag_rule_property_range_edit")
             .striped(true)
@@ -37,7 +37,7 @@ impl Component for TagRulePropertyRangeEdit<'_> {
                 .display(|property_id| property_id.as_ref())
                 .condition(|property_def| {
                     property_def.property_type == CuriosityPropertyType::Normalized
-                        && !property_def.id.as_ref().is_empty()
+                        && !property_def.id.is_empty()
                 })
                 .id("property_range_property_selector")
                 .show(ui);

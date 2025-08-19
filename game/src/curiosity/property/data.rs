@@ -1,4 +1,4 @@
-use crate::curiosity::property::types;
+use crate::data::curiosity::property::types;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
